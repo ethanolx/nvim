@@ -1,0 +1,5 @@
+return {
+    outline = {
+        main = "",
+    },
+}
