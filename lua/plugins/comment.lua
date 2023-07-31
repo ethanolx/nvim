@@ -1,32 +1,38 @@
-local present, comment = pcall(require, "Comment")
+return {
+    {
+        "numToStr/Comment.nvim",
+        event = "VeryLazy",
+        config = function()
+            require("Comment").setup {
+                toggler = {
+                    line = "gcc",
+                    block = "gCC",
+                },
 
-if not present then
-    return
-end
+                opleader = {
+                    line = "gc",
+                    block = "gC",
+                },
 
-comment.setup {
+                extra = {
+                    above = "gcO",
+                    below = "gco",
+                    eol = "gcA",
+                },
 
-    toggler = {
-        line = "gcc",
-        block = "gCC",
+                ignore = "^$",
+            }
+
+            local ft = require("Comment.ft")
+
+            ft.javascript = { "//%s", "/*%s*/" }
+            ft.php = { "//*%s", "/*%s*/" }
+            ft.yaml = "#%s"
+        end,
     },
-
-    opleader = {
-        line = "gc",
-        block = "gC",
+    {
+        "folke/todo-comments.nvim",
+        event = { "BufReadPost", "BufNewFile" },
+        config = true,
     },
-
-    extra = {
-        above = "gcO",
-        below = "gco",
-        eol = "gcA",
-    },
-
-    ignore = "^$",
 }
-
-local ft = require("Comment.ft")
-
-ft.javascript = { "//%s", "/*%s*/" }
-ft.yaml = "#%s"
-ft.php = { "//*%s", "/*%s*/" }

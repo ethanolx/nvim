@@ -1,55 +1,66 @@
--- Bootstrap packer.nvim installation
-local fresh_install = false
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-    print("Commencing initial installation...")
-    vim.fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim", install_path })
-    vim.cmd("packadd packer.nvim")
-    fresh_install = true
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath,
+    })
 end
 
--- Load packer
-local packer = require("packer")
+vim.opt.rtp:prepend(lazypath)
 
--- Fetch icons
+local lazy = require("lazy")
 local icons = require("core.icons")
 
--- Initialize packer
-packer.init {
-    auto_clean = true,
-    compile_on_sync = true,
-    snapshot_path = vim.fn.stdpath("data") .. "/snapshot/",
-    display = {
-        -- Symbols
-        working_sym = icons.progress.static.pending .. " ",
-        error_sym = icons.progress.static.error .. " ",
-        done_sym = icons.progress.static.done .. " ",
-        removed_sym = icons.progress.static.removed .. " ",
-        moved_sym = icons.progress.static.moved .. " ",
-
-        -- Borders
-        prompt_border = "rounded",
-        open_fn = function() return require("packer.util").float({ border = "rounded" }) end,
-
-        -- Keybindings
-        keybindings = {
-            quit = "<esc>",
+lazy.setup("plugins", {
+    root = vim.fn.stdpath("data") .. "/lazy",
+    install = {
+        colorscheme = {},
+    },
+    custom_keys = {
+        ["<localleader>l"] = false,
+        ["<localleader>t"] = false,
+    },
+    checker = {
+        enabled = true,
+        frequency = 60 * 60 * 24 * 7 -- Check for updates every week
+    },
+    performance = {
+        rtp = {
+            disabled_plugins = vim.g.disable_plugins
         }
     },
-}
-
--- Load plugins
-packer.startup(function(use)
-    local plugins = require("plugins")
-
-    for plugin, opts in pairs(plugins) do
-        table.insert(opts, plugin)
-    use(opts)
-    end
-
-    -- Install latest plugins if fresh installation
-    if fresh_install then
-        packer.sync()
-    end
-end)
+    ui = {
+        border = "rounded",
+        icons = {
+            cmd = " ",
+            config = "",
+            event = "",
+            ft = " ",
+            init = " ",
+            import = " ",
+            keys = " ",
+            lazy = "󰒲 ",
+            loaded = "●",
+            not_loaded = "○",
+            plugin = " ",
+            runtime = " ",
+            source = " ",
+            start = "",
+            task = "✔ ",
+            list = {
+                "●",
+                "➜",
+                "★",
+                "‒",
+            },
+        }
+    },
+    readme = {
+        root = vim.fn.stdpath("data") .. "/lazy/readme",
+    },
+    state = vim.fn.stdpath("data") .. "/lazy/state.json",
+})

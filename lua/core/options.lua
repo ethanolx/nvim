@@ -1,6 +1,9 @@
 -- Colour Scheme
 vim.opt.termguicolors = true
 
+-- Conceal
+vim.opt.conceallevel = 2
+
 -- Labels
 vim.opt.title = false
 

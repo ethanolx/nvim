@@ -1,3 +1,6 @@
+-- Fetch icons
+local icons = require("core.icons")
+
 local utils = {}
 
 utils.get_colour_palette = function(colour_scheme)
@@ -22,6 +25,16 @@ utils.format_plugin_name = function(plugin_name)
     return clean_plugin_name
 end
 
+utils.padded_icons = function()
+    local padded_icons = {}
+
+    for item, icon in pairs(icons.lsp) do
+        padded_icons[utils.capitalize(item)] = icon .. " "
+    end
+
+    return padded_icons
+end
+
 utils.load_highlights = function(callback)
     local colour_palette = utils.get_colour_palette(vim.g.colour_scheme)
 
@@ -36,17 +49,9 @@ utils.load_highlights = function(callback)
     end
 end
 
--- WARN: depends on bufferline.nvim's api
-utils.check_if_last_buffer = function()
-    local bufferline_commands = require "bufferline.commands"
-    local bufferline_state = require "bufferline.state"
-    local current_buffer_index = bufferline_commands.get_current_element_index(bufferline_state)
-    return current_buffer_index >= #bufferline_state.components
-end
-
-utils.close_buffer = function(force)
+utils.close_buffer = function()
     if vim.bo.buftype == "terminal" then
-        force = force or #vim.api.nvim_list_wins() < 2 and ":bd!"
+        local force = #vim.api.nvim_list_wins() < 2 and ":bd!"
         local swap = force and #vim.api.nvim_list_bufs() > 1 and ":bp | bd!" .. vim.fn.bufnr()
         return vim.cmd(swap or force or "hide")
     end
@@ -56,19 +61,18 @@ utils.close_buffer = function(force)
 
     -- if file doesnt exist & its modified
     if fileExists == 0 and modified then
-        print "no file name? add it now!"
+        vim.ui.input({
+            prompt = "This file does not exist. Are you sure? y/n",
+        }, function(input)
+            if input == "y" then
+                vim.cmd(":bd!")
+            end
+        end)
         return
     end
 
-    force = force or not vim.bo.buflisted or vim.bo.buftype == "nofile"
-
-    -- if buffer is the last, fall back to the previous buffer
-    -- after closing, else fall back to the next buffer
-    local direction = utils.check_if_last_buffer() and "p" or "n"
-    local bufnr = vim.fn.bufnr()
-
-    -- if not force, change to prev buf and then close current
-    local close_cmd = force and ":bd!" or (":b" .. direction .. " | bd" .. bufnr)
+    local force = not vim.bo.buflisted or vim.bo.buftype == "nofile"
+    local close_cmd = force and ":bd!" or (":bn|bd" .. vim.fn.bufnr())
     vim.cmd(close_cmd)
 end
 
@@ -110,14 +114,9 @@ utils.load_main_mappings = function(registrar, prefix, icon, modes)
     utils.load_sub_mappings(registrar, prefix, modes)
 end
 
-utils.load_mappings = function(mappings)
-    local registrar = require("which-key")
-
+utils.load_mappings = function(mappings, registrar)
     -- Determine compatibility mode
     local compatibility_mode = vim.g.compatibility_mode or 1
-
-    -- Fetch icons
-    local icons = require("core.icons")
 
     -- Consolidate categories
     local main_mappings = {}
@@ -241,68 +240,6 @@ utils.reset_cursor_pos = function(pos)
     end
 
     vim.api.nvim_win_set_cursor(0, pos)
-end
-
-utils.load_context_provider = function(context_provider)
-    local current_context = {
-        provider = function()
-            return context_provider.get_location()
-        end,
-        enabled = function()
-            return context_provider.is_available()
-        end,
-        hl = "WinBar"
-    }
-
-    require("feline").winbar.setup {
-        components = {
-            active = {
-                {},
-                { current_context },
-                {},
-            },
-            inactive = {},
-        }
-    }
-end
-
-utils.hover = function(select)
-    select = select or false
-    return function()
-        if vim.g.providers.hover == "native" then
-            vim.cmd [[autocmd! CursorHold *]]
-            vim.lsp.buf.hover()
-            vim.cmd [[autocmd CursorMoved * ++once lua require("core.utils").activate_diagnostics()]]
-        elseif vim.g.providers.hover == "hover" then
-            if select then
-                require("hover").hover_select()
-            else
-                require("hover").hover()
-            end
-        end
-    end
-end
-
-utils.outline = function(action)
-    return function()
-        if vim.g.providers.outline == "aerial" then
-            if action == nil then
-                vim.cmd "AerialToggle"
-            elseif action == "open" then
-                vim.cmd "AerialOpen"
-            elseif action == "close" then
-                vim.cmd "AerialClose"
-            end
-        elseif vim.g.providers.outline == "symbols" then
-            if action == nil then
-                vim.cmd "SymbolsOutline"
-            elseif action == "open" then
-                vim.cmd "SymbolsOutlineOpen"
-            elseif action == "close" then
-                vim.cmd "SymbolsOutlineClose"
-            end
-        end
-    end
 end
 
 utils.foldtext = function()

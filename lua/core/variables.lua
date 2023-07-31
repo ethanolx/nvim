@@ -12,7 +12,7 @@ vim.g.matchparen_timeout = 5
 vim.g.matchparen_insert_timeout = 5
 
 -- Disable builtin vim plugins
-local default_plugins = {
+vim.g.disable_plugins = {
     "2html_plugin",
     "bugreport",
     "compiler",
@@ -46,10 +46,6 @@ local default_plugins = {
     "zipPlugin",
 }
 
-for _, plugin in pairs(default_plugins) do
-    vim.g["loaded_" .. plugin] = true
-end
-
 -- +------------------------------+
 -- |                              |
 -- |            CUSTOM            |
@@ -70,7 +66,7 @@ vim.g.providers = {
     hover = "hover",
 
     -- gps/navic/treesitter
-    context = "navic",
+    context = "gps",
 
     -- aerial/symbols
     outline = "symbols",

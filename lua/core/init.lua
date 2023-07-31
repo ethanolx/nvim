@@ -1,13 +1,13 @@
 -- CORE MODULES --
 
+-- Load variables
+require("core.variables")
+
 -- Load autocommands
 require("core.autocommands")
 
 -- Load options
 require("core.options")
-
--- Load variables
-require("core.variables")
 
 -- Load default highlights
 require("core.highlights")

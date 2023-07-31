@@ -58,36 +58,36 @@ mappings.ctl = {
 
 mappings.overload = {
     i = {
-            ["<S-Tab>"] = { "<C-d>", "󰉵   Decrease Indentation" },
-            -- ["<Tab>"] = { "<C-t>", "󰉶   Increase Indentation" },
+        ["<S-Tab>"] = { "<C-d>", "󰉵   Decrease Indentation" },
+        -- ["<Tab>"] = { "<C-t>", "󰉶   Increase Indentation" },
     },
     n = {
-            ["<Esc>"] = { "<Esc><cmd>nohl<cr>", "󰸱  Hide Search Highlights" },
-            ["<Tab>"] = { "<cmd> BufferLineCycleNext <cr>", "   Next Buffer" },
-            ["<S-Tab>"] = { "<cmd> BufferLineCyclePrev <cr>", "   Previous Buffer" },
-            ["K"] = { utils.hover(), "󰆽   Hover", },
-            ["gK"] = { utils.hover(true), "󰆽   Hover Options", },
-            ["gV"] = { "'[v']", "Go to last paste" }
+        ["<Esc>"] = { "<Esc><cmd>nohl<cr>", "󰸱  Hide Search Highlights" },
+        ["<Tab>"] = { "<cmd> BufferLineCycleNext <cr>", "   Next Buffer" },
+        ["<S-Tab>"] = { "<cmd> BufferLineCyclePrev <cr>", "   Previous Buffer" },
+        ["K"] = { function() require("hover").hover() end, "󰆽   Hover", },
+        ["gK"] = { function() require("hover").hover_select() end, "󰆽   Hover Options", },
+        ["gV"] = { "'[v']", "Go to last paste" }
     }
 }
 
 mappings.misc = {
     i = {
-            ["<C-k><C-k>"] = { "<cmd>lua require'better-digraphs'.digraphs(\"i\")<cr>", "󱍨   Insert Digraph" },
+        ["<C-k><C-k>"] = { "<cmd>lua require'better-digraphs'.digraphs(\"i\")<cr>", "󱍨   Insert Digraph" },
     }
 }
 
 mappings.compatibility = {
     n = {
-            ["<C-a>"] = { "<cmd>lua require(\"core.utils\").select_all() <cr>", "* Select All" },
-            ["<C-b>"] = { "<cmd>NvimTreeToggle<cr>", "* Toggle Explorer" },
-            ["<C-c>"] = { "\"*y", "* Copy" },
-            ["<C-f>"] = { "/", "* Find" },
-            ["<C-g>"] = { ":", "* Go To Line" },
-            ["<C-o>"] = { ":e ", "* Open File" },
-            ["<C-s>"] = { "<cmd>w<cr>", "* Save" },
-            ["<C-v>"] = { "\"*p", "* Paste" },
-            ["<C-z>"] = { "<cmd>normal \"u\"<cr>", "* Undo" },
+        ["<C-a>"] = { "<cmd>lua require(\"core.utils\").select_all() <cr>", "* Select All" },
+        ["<C-b>"] = { "<cmd>NvimTreeToggle<cr>", "* Toggle Explorer" },
+        ["<C-c>"] = { "\"*y", "* Copy" },
+        ["<C-f>"] = { "/", "* Find" },
+        ["<C-g>"] = { ":", "* Go To Line" },
+        ["<C-o>"] = { ":e ", "* Open File" },
+        ["<C-s>"] = { "<cmd>w<cr>", "* Save" },
+        ["<C-v>"] = { "\"*p", "* Paste" },
+        ["<C-z>"] = { "<cmd>normal \"u\"<cr>", "* Undo" },
     }
 }
 
@@ -101,7 +101,7 @@ mappings.autocompletion = {
 -- b:  buffers
 mappings.buffer = {
     n = {
-        j = { "<cmd>BufferLinePick<cr>", "󰿄 Jump To Buffer" },
+        a = { "<cmd>e#<cr>", "󰒮 Previous Buffer" },
         c = { function() require("core.utils").close_buffer() end, "󰅗 Close Buffer", },
         C = { "<cmd>%bd<cr>", "󰱝 Close All Buffers" },
         g = { "<cmd>BufferLineGroupToggle pinned<cr>", " Toggle Pinned Buffers" },
@@ -120,37 +120,19 @@ mappings.comment = {
         q = { "<cmd>TodoQuickFix<cr>", icons.category.quickfix .. " Todo Comments Quickfix" },
     }
 }
-mappings.context = {
-    n = {
-        j = {
-            function()
-                local ok, start = require("indent_blankline.utils").get_current_context(
-                    vim.g.indent_blankline_context_patterns,
-                    vim.g.indent_blankline_use_treesitter_scope
-                )
-
-                if ok then
-                    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-                    vim.cmd "silent normal ^"
-                end
-            end,
-            "󰿄 Jump To Current Context",
-        },
-    }
-}
 
 -- d:  diagnostics/debugging
 mappings.debug = {
     n = {
         -- B = { "<cmd> conditional breakpoint <cr>", " Toggle Conditional Breapoint" },
-        b = { "<cmd> DapToggleBreakpoint <cr>", " Toggle Breakpoint" },
-        c = { "<cmd> DapContinue <cr>", " Begin Debugging Session" },
-        e = { "<cmd> lua require('dapui').eval() <cr>", " Inspect Variable" },
-        i = { "<cmd> DapStepInto <cr>", " Step Into" },
-        k = { "<cmd> DapTerminate <cr>", " Kill Debugging Session" },
-        o = { "<cmd> DapStepOut <cr>", " Step Out" },
-        u = { "<cmd> lua require('dapui').toggle() <cr>", " Toggle UI" },
-        v = { "<cmd> DapStepOver <cr>", " Step Over" },
+        b = { "<cmd>DapToggleBreakpoint <cr>", " Toggle Breakpoint" },
+        c = { "<cmd>DapContinue <cr>", " Begin Debugging Session" },
+        e = { "<cmd>lua require('dapui').eval() <cr>", " Inspect Variable" },
+        i = { "<cmd>DapStepInto <cr>", " Step Into" },
+        k = { "<cmd>DapTerminate <cr>", " Kill Debugging Session" },
+        o = { "<cmd>DapStepOut <cr>", " Step Out" },
+        u = { "<cmd>lua require('dapui').toggle() <cr>", " Toggle UI" },
+        v = { "<cmd>DapStepOver <cr>", " Step Over" },
     }
 }
 mappings.diagnostic = {
@@ -247,7 +229,6 @@ mappings.git = {
 -- h:  health
 mappings.health = {
     n = {
-        _ = { "<cmd>checkhealth<cr>", "󰟌 Check Health" },
     }
 }
 
@@ -258,13 +239,28 @@ mappings.health = {
 mappings.jump = {
     n = {
         _ = { "<cmd>Pounce<cr>", " Fuzzy Jump" },
+        b = { "<cmd>BufferLinePick<cr>", " Jump To Buffer" },
+        c = {
+            function()
+                local ok, start = require("indent_blankline.utils").get_current_context(
+                    vim.g.indent_blankline_context_patterns,
+                    vim.g.indent_blankline_use_treesitter_scope
+                )
+
+                if ok then
+                    vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
+                    vim.cmd "silent normal ^"
+                end
+            end,
+            " Jump To Current Context",
+        },
     }
 }
 
 -- k:  keymaps
 mappings.keymap = {
     n = {
-        _ = { "<cmd>WhichKey<cr>", icons.category.keymap .. " Query WhichKey", },
+        _ = { "<cmd>WhichKey<cr>", " Query WhichKey", },
     }
 }
 
@@ -305,22 +301,26 @@ mappings.mark = {
 -- n:  notes
 mappings.note = {
     n = {
-        _ = {
-            function()
-                local cwd = vim.fn.getcwd()
-                vim.cmd "Neorg workspace notes"
-                vim.g.prev_cwd = cwd
-            end,
-            " Open Notes"
-        },
-        v = { "<cmd>Neorg gtd views<cr>", " Notes Overview" },
-        r = {
-            function()
-                vim.cmd("Neorg return")
-                vim.cmd("cd " .. vim.g.prev_cwd)
-            end,
-            " Return To Code",
-        },
+        _ = { "<cmd>Neorg workspace notes<cr>", " Open Notes" },
+        -- _ = {
+        --     function()
+        --         local cwd = vim.fn.getcwd()
+        --         vim.cmd "Neorg workspace notes"
+        --         vim.g.prev_cwd = cwd
+        --     end,
+        --
+        -- },
+        d = { function()
+            require("notify").dismiss({ silent = true, pending = true })
+        end, "󱄊 Dismiss Notifications" },
+        -- r = {
+        --     function()
+        --         vim.cmd("Neorg return")
+        --         vim.cmd("cd " .. vim.g.prev_cwd)
+        --     end,
+        --     ,
+        -- },
+        r = { "<cmd>Neorg return<cr>", " Return To Code" },
         p = { "<cmd> Neorg presenter start <cr>", "󰐩 Start Presentation" },
     },
 }
@@ -328,9 +328,9 @@ mappings.note = {
 -- o:  outline
 mappings.outline = {
     n = {
-        _ = { utils.outline(), "󰔡 Toggle Outline" },
-        o = { utils.outline("open"), " Open Outline" },
-        c = { utils.outline("close"), " Close Outline" },
+        _ = { "<cmd>AerialToggle<cr>", "󰔡 Toggle Outline" },
+        o = { "<cmdAerialOpen<cr>", " Open Outline" },
+        c = { "<cmdAerialClose<cr>", " Close Outline" },
     }
 }
 
@@ -342,11 +342,11 @@ mappings.package = {
 }
 mappings.plugin = {
     n = {
-        s = { "<cmd> PackerStatus <cr>", "󱖫 Plugin Status" },
-        c = { "<cmd> PackerClean <cr>", "󰃢 Clean Plugins" },
-        i = { "<cmd> PackerInstall <cr>", " Install Plugins" },
-        p = { "<cmd> PackerProfile <cr>", " Plugin Startup Profile" },
-        u = { "<cmd> PackerUpdate <cr>", "󰚰 Update Plugins" },
+        s = { "<cmd>Lazy<cr>", "󱖫 Plugin Status" },
+        c = { "<cmd>Lazy clean<cr>", "󰃢 Clean Plugins" },
+        i = { "<cmd>Lazy install<cr>", " Install Plugins" },
+        p = { "<cmd>Lazy profile<cr>", " Plugin Startup Profile" },
+        u = { "<cmd>Lazy update<cr>", "󰚰 Update Plugins" },
     },
 }
 
@@ -426,5 +426,4 @@ mappings.zen = {
     }
 }
 
-
-utils.load_mappings(mappings)
+return mappings
