@@ -50,7 +50,6 @@ return {
                 end,
             }
 
-            require("telescope").load_extension("notify")
         end,
     },
     {

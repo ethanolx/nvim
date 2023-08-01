@@ -4,11 +4,9 @@ return {
     {
         "nvim-telescope/telescope.nvim",
         dependencies = {
-            "debugloop/telescope-undo.nvim",
-            "nvim-telescope/telescope-file-browser.nvim",
+            "rcarriga/nvim-notify",
             "nvim-telescope/telescope-fzf-native.nvim",
             "nvim-treesitter/nvim-treesitter",
-            "nvim-telescope/telescope-dap.nvim",
         },
         cmd = "Telescope",
         config = function()
@@ -67,7 +65,9 @@ return {
                     },
                 }
             }
+
             telescope.load_extension("fzf")
+            telescope.load_extension("notify")
         end,
     },
     {
