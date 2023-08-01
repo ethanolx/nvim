@@ -151,6 +151,7 @@ mappings.explorer = {
         _ = { "<cmd>NvimTreeToggle<cr>", "󰔡 Toggle Explorer" },
         c = { "<cmd>NvimTreeClose<cr>", " Collapse Explorer" },
         f = { "<cmd>NvimTreeFindFile<cr>", "󰆤 Find File In Explorer" },
+        o = { "<cmd>Oil<cr>", "󰁴 Oil Explorer" },
         r = { "<cmd>NvimTreeRefresh<cr>", " Refresh Explorer" },
     },
 }
