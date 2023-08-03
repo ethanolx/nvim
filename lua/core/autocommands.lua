@@ -68,35 +68,6 @@ autocmd("InsertLeave", {
 
 -- FileType
 autocmd("FileType", {
-    pattern = {
-        "",
-        "DressingInput",
-        "Outline",
-        "TelescopePrompt",
-        "TelescopeResults",
-        "Trouble",
-        "aerial",
-        "alpha",
-        "dashboard",
-        "help",
-        "lazy",
-        "lazyterm",
-        "lsp-installer",
-        "lspinfo",
-        "mason",
-        "noice",
-        "notify",
-        "oil",
-        "oil_preview",
-        "packer",
-        "terminal",
-        "toggleterm",
-    },
-    callback = function ()
-        vim.b.autopairs_enabled = false
-    end,
-})
-autocmd("FileType", {
     pattern = "gitcommit",
     callback = function()
         vim.wo.signcolumn = "no"

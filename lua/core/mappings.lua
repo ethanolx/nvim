@@ -239,7 +239,7 @@ mappings.health = {
 -- j:  jump
 mappings.jump = {
     n = {
-        _ = { "<cmd>Pounce<cr>", " Fuzzy Jump" },
+        _ = { function() require("flash").jump() end, " Fuzzy Jump" },
         b = { "<cmd>BufferLinePick<cr>", " Jump To Buffer" },
         c = {
             function()

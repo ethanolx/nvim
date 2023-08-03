@@ -2,36 +2,9 @@ local icons = require("core.icons")
 return {
     -- Parentheses/Brackets/Braces
     {
-        "LunarWatcher/auto-pairs",
-        version = "4.*",
-        event = "InsertEnter",
-        init = function()
-            vim.g.AutoPairsCompatibleMaps = false
-            vim.g.AutoPairsMapBS = true
-            vim.g.AutoPairsFiletypeBlacklist = {
-                "",
-                "DressingInput",
-                "Outline",
-                "TelescopePrompt",
-                "TelescopeResults",
-                "Trouble",
-                "aerial",
-                "alpha",
-                "dashboard",
-                "help",
-                "lazy",
-                "lazyterm",
-                "lsp-installer",
-                "lspinfo",
-                "mason",
-                "notify",
-                "oil",
-                "oil_preview",
-                "packer",
-                "terminal",
-                "toggleterm",
-            }
-        end,
+        "echasnovski/mini.pairs",
+        version = "*",
+        config = true,
     },
     -- Snippets
     {
@@ -58,7 +31,7 @@ return {
     {
         "hrsh7th/nvim-cmp",
         version = false,
-        event = { "InsertEnter", "CmdlineEnter" },
+        event = "InsertEnter",
         dependencies = {
             "hrsh7th/cmp-nvim-lua",
             "hrsh7th/cmp-nvim-lsp",
@@ -229,29 +202,6 @@ return {
         dependencies = {
             "L3MON4D3/LuaSnip"
         }
-    },
-    {
-        "hrsh7th/cmp-cmdline",
-        event = "CmdlineEnter",
-        config = function()
-            local cmp = require("cmp")
-
-            cmp.setup.cmdline(":", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    -- { name = "path" },
-                    { name = "cmdline", max_item_count = 12, keyword_pattern = "!\\@!\\w*" },
-                })
-            })
-
-            cmp.setup.cmdline("/", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = "nvim_lsp" },
-                    { name = "buffer",  max_item_count = 10, }
-                }
-            })
-        end
     },
     {
         "petertriho/cmp-git",

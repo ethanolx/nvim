@@ -150,6 +150,11 @@ return {
                             colored = true,
                             update_in_insert = false,
                             always_visible = false,
+                        },
+                        {
+                            require("noice").api.statusline.mode.get,
+                            cond = require("noice").api.statusline.mode.has,
+                            color = { fg = colour_palette.orange },
                         }
                     },
                     lualine_x = {
@@ -170,7 +175,7 @@ return {
                         {
                             "fileformat",
                             color = { bg = colour_palette.statusline_bg },
-                            fmt = function (ff, _)
+                            fmt = function(ff, _)
                                 if vim.bo.fileencoding == "" then
                                     return ff
                                 end

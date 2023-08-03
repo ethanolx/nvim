@@ -178,6 +178,7 @@ return {
     },
     {
         "folke/noice.nvim",
+        version = "*",
         dependencies = {
             "MunifTanjim/nui.nvim",
             "rcarriga/nvim-notify",
@@ -216,18 +217,17 @@ return {
                 long_message_to_split = true,
                 inc_rename = true,
             },
-            popupmenu = {
-                backend = "cmp",
-            },
         },
     },
     {
         "folke/twilight.nvim",
+        version = "*",
         cmd = { "Twilight", "TwilightEnable", "TwilightDisable" },
         config = true,
     },
     {
         "folke/zen-mode.nvim",
+        version = "*",
         dependencies = {
             "folke/twilight.nvim",
         },

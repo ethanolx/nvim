@@ -13,7 +13,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local lazy = require("lazy")
-local icons = require("core.icons")
 
 lazy.setup("plugins", {
     root = vim.fn.stdpath("data") .. "/lazy",
@@ -26,7 +25,7 @@ lazy.setup("plugins", {
     },
     checker = {
         enabled = true,
-        frequency = 60 * 60 * 24 * 7 -- Check for updates every week
+        frequency = 60 * 60 * 24 -- Check for updates every day
     },
     performance = {
         rtp = {
@@ -59,8 +58,4 @@ lazy.setup("plugins", {
             },
         }
     },
-    readme = {
-        root = vim.fn.stdpath("data") .. "/lazy/readme",
-    },
-    state = vim.fn.stdpath("data") .. "/lazy/state.json",
 })
