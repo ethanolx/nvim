@@ -22,7 +22,7 @@ return {
     session = "",
     terminal = "",
     test = "",
-    undo = "",
+    undo = "",
     vim = "",
     window = "",
     zen = "",

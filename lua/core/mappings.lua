@@ -125,7 +125,7 @@ mappings.comment = {
 mappings.debug = {
     n = {
         -- B = { "<cmd> conditional breakpoint <cr>", " Toggle Conditional Breapoint" },
-        b = { "<cmd>DapToggleBreakpoint <cr>", " Toggle Breakpoint" },
+        b = { "<cmd>PBToggleBreakpoint <cr>", " Toggle Breakpoint" },
         c = { "<cmd>DapContinue <cr>", " Begin Debugging Session" },
         e = { "<cmd>lua require('dapui').eval() <cr>", " Inspect Variable" },
         i = { "<cmd>DapStepInto <cr>", " Step Into" },
@@ -164,13 +164,39 @@ mappings.find = {
         B = { "<cmd> Telescope buffers <cr>", icons.category.buffer .. " Find Buffers" },
         c = { "<cmd> TodoTelescope <cr>", icons.category.comment .. " Find Comments" },
         d = { icons.category.debug .. " Debug / " .. icons.category.diagnostic .. " Diagnostic" },
-        dg = { "<cmd> Telescope diagnostics <cr>", icons.category.diagnostic .. "   Find Diagnostics" },
-        df = { "<cmd> Telescope dap frames <cr>", icons.category.debug .. "  Find DAP Frames" },
-        db = { "<cmd> Telescope dap list_breakpoints <cr>", icons.category.debug .. " 󰏧 Find DAP Breakpoints" },
-        dv = { "<cmd> Telescope dap variables <cr>", icons.category.debug .. " 󰀫 Find DAP Variables" },
-        e = { "<cmd> Telescope file_browser path=%:p:h select_buffer=true hidden=true <cr>",
+        dg = {
+            "<cmd> Telescope diagnostics <cr>", icons.category.diagnostic .. "   Find Diagnostics" },
+        df = {
+            function()
+                vim.cmd("Lazy load telescope-dap.nvim")
+                vim.cmd("Telescope dap frames")
+            end,
+            icons.category.debug .. "  Find DAP Frames" },
+        db = {
+            function()
+                vim.cmd("Lazy load telescope-dap.nvim")
+                vim.cmd("Telescope dap list_breakpoints")
+            end,
+            icons.category.debug .. " 󰏧 Find DAP Breakpoints" },
+        dv = {
+            function()
+                vim.cmd("Lazy load telescope-dap.nvim")
+                vim.cmd("Telescope dap variables")
+            end,
+            icons.category.debug .. " 󰀫 Find DAP Variables" },
+        e = {
+            function()
+                vim.cmd("Lazy load telescope-file-browser.nvim")
+                vim.cmd("Telescope file_browser path=%:p:h select_buffer=true hidden=true")
+            end,
             icons.category.explorer .. " File Explorer In CWD" },
-        E = { "<cmd> Telescope file_browser <cr>", icons.category.explorer .. " File Explorer" },
+        E = {
+            function()
+                vim.cmd("Lazy load telescope-file-browser.nvim")
+                vim.cmd("Telescope file_browser")
+            end,
+            icons.category.explorer .. " File Explorer",
+        },
         f = { "<cmd> Telescope find_files <cr>", icons.filesystem.file .. " Find Files" },
         F = { "<cmd> Telescope find_files follow=true no_ignore=true hidden=true <cr>",
             icons.filesystem.file .. " Find Hidden/Dot Files" },
@@ -197,6 +223,13 @@ mappings.find = {
         r = { "<cmd> Telescope registers <cr>", "󰍛 Find Registers" },
         s = { "<cmd> Telescope persisted <cr>", icons.category.session .. " Find Sessions" },
         t = { "<cmd> Telescope treesitter <cr>", "󰙅 Find Treesitter Symbols" },
+        u = {
+            function()
+                vim.cmd("Lazy load telescope-undo.nvim")
+                vim.cmd("Telescope undo")
+            end,
+            icons.category.undo .. " Find Undo History"
+        },
         x = { "<cmd> Telescope live_grep grep_open_files=true<cr>", " Live Grep In Open Files" },
         X = { "<cmd> Telescope live_grep <cr>", " Live Grep" },
     },
