@@ -382,7 +382,7 @@ return {
         end,
     },
     {
-        "SmiteshP/nvim-gps",
+        "ethanolx/nvim-gps",
         dependencies = {
             "nvim-treesitter/nvim-treesitter",
         },

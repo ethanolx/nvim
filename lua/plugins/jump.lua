@@ -6,6 +6,11 @@ return {
         opts = {
             jump = {
                 nohlsearch = true,
+            },
+            mode = {
+                search = {
+                    enabled = false,
+                },
             }
         }
     },

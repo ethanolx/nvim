@@ -51,6 +51,7 @@ return {
         dependencies = {
             "williamboman/mason.nvim",
             "neovim/nvim-lspconfig",
+            "jose-elias-alvarez/null-ls.nvim",
             "SmiteshP/nvim-navic",
         },
         config = function()
@@ -166,7 +167,7 @@ return {
                         },
                         root_dir = function(fname)
                             return require("lspconfig").util.root_pattern("pom.xml", "gradle.build", ".git", ".gitignore")(
-                                fname) or
+                                    fname) or
                                 vim.fn.getcwd()
                         end
                     }
@@ -243,6 +244,20 @@ return {
                 separator = " » ",
                 depth = 5,
                 depth_limit_indicator = "",
+            }
+        end,
+    },
+    {
+        "jose-elias-alvarez/null-ls.nvim",
+        lazy = true,
+        config = function()
+            local null_ls = require("null-ls")
+
+            null_ls.setup {
+                sources = {
+                    null_ls.builtins.formatting.black,
+                    null_ls.builtins.formatting.prettierd,
+                },
             }
         end,
     },

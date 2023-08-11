@@ -4,6 +4,7 @@ return {
         version = "*",
         ft = "norg",
         cmd = "Neorg",
+        build = ":Neorg sync-parsers",
         config = function()
             require("neorg").setup {
                 load = {

@@ -446,6 +446,8 @@ mappings.vim = {
 mappings.window = {
     n = {
         c = { "<cmd>q<cr>", " Close Current Window" },
+        h = { "<cmd>split<cr>", " Split Current Window Horizontally" },
+        v = { "<cmd>vsplit<cr>", " Split Current Window Vertically" },
     },
 }
 

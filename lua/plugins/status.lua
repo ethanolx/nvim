@@ -7,6 +7,7 @@ return {
         dependencies = {
             "nvim-tree/nvim-web-devicons",
         },
+        event = "VeryLazy",
         opts = function()
             local colour_palette = utils.get_colour_palette().base_30
 
@@ -150,6 +151,7 @@ return {
                             colored = true,
                             update_in_insert = false,
                             always_visible = false,
+                            separator = "",
                         },
                         {
                             require("noice").api.statusline.mode.get,
