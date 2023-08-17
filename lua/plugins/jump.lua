@@ -7,7 +7,7 @@ return {
             jump = {
                 nohlsearch = true,
             },
-            mode = {
+            modes = {
                 search = {
                     enabled = false,
                 },
