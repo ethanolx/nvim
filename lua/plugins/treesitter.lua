@@ -6,12 +6,14 @@ return {
         "nvim-treesitter/nvim-treesitter",
         lazy = true,
         cmd = {
-            "TSInstall",
-            "TSBufEnable",
             "TSBufDisable",
-            "TSEnable",
+            "TSBufEnable",
             "TSDisable",
+            "TSEnable",
+            "TSInstall",
             "TSModuleInfo",
+            "TSUpdate",
+            "TSUpdateSync",
         },
         build = ":TSUpdate",
         config = function()

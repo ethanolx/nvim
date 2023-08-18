@@ -288,6 +288,7 @@ mappings.jump = {
             end,
             " Jump To Current Context",
         },
+        t = { function() require("flash").treesitter() end, "󰙅 Treesitter Jump" },
     }
 }
 

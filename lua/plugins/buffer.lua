@@ -2,7 +2,7 @@ return {
     {
         "akinsho/bufferline.nvim",
         version = "v4.*",
-        event = "BufAdd",
+        event = "VeryLazy",
         config = function()
             local icons = require("core.icons")
 
